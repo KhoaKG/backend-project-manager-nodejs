@@ -30,9 +30,9 @@ app.use(methodOverride('_method'))
 
 
 app.set("view engine", "pug")
-app.set("views", "./views")
+app.set("views", `${__dirname}/views`)
 
-app.use(express.static('public'))
+app.use(express.static(`${__dirname}/public`))
 
 app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
