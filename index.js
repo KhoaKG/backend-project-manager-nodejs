@@ -20,6 +20,9 @@ var bodyParser = require('body-parser')
 
 var flash = require('express-flash')
 
+var path = require('path');
+
+
 const app = express()
 const port = process.env.PORT
 
@@ -37,6 +40,8 @@ app.use(express.static(`${__dirname}/public`))
 app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // Routes
 routeAdmin(app)

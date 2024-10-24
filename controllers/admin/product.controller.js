@@ -3,6 +3,8 @@ const filterStatusHelper = require("../../helper/filterStatus")
 const searchHelper = require("../../helper/search")
 const paginationHelper = require("../../helper/pagination")
 const systemConfig = require("../../config/system")
+const ProductsCategory = require("../../models/products-category.model")
+const createTreeHelper = require("../../helper/createTree")
 
 // [GET]: /admin/products
 module.exports.index = async(req, res) => {
@@ -39,10 +41,19 @@ module.exports.index = async(req, res) => {
 
     // End Pagination
 
+    // Sort
+    let sort ={};
 
+    if(req.query.sortKey && req.query.sortValue){
+        sort[req.query.sortKey] = req.query.sortValue
+    }else{
+        sort.position = "desc"
+    }
+
+    // End Sort
     
     const products = await Product.find(find)
-        .sort({position: "desc"})
+        .sort(sort)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip)
 
@@ -113,8 +124,15 @@ module.exports.deleteItem = async (req,res) =>{
 
 // [GET]: /admin/products/create
 module.exports.create = async (req,res) =>{
+    let find = {
+        deleted: false,
+
+    }
+    const category = await ProductsCategory.find(find)
+    const newCategory = createTreeHelper.tree(category)
     res.render("admin/pages/products/create",{
-        pageTitle: "Trang tạo sản phẩm"
+        pageTitle: "Trang tạo sản phẩm",
+        category: newCategory
     })
 }
 
@@ -146,9 +164,16 @@ module.exports.edit = async (req,res) =>{
             deleted:false,
             _id: req.params.id
         }
+        const category = await ProductsCategory.find({
+            deleted: false,
+    
+        })
+        const newCategory = createTreeHelper.tree(category)
+
         const product = await Product.findOne(find)
         res.render("admin/pages/products/edit",{
             pageTitle: "Trang chỉnh sửa sản phẩm",
+            category: newCategory,
             product: product
         })
     } catch (error) {
