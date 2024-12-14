@@ -28,7 +28,6 @@ if(formSearch){
     let url = new URL(window.location.href)
     formSearch.addEventListener("submit",(e)=>{
         e. preventDefault();
-        console. log(e.target.elements.keyword.value);
         const keyword = e.target.elements.keyword.value
         if(keyword){
             url.searchParams.set("keyword", keyword)
@@ -43,7 +42,6 @@ if(formSearch){
 // Pagination
     
 const buttonsPagination = document.querySelectorAll("[button-pagination]")
-console.log(buttonsPagination);
 
 if(buttonsPagination){
     let url = new URL(window.location.href)
@@ -123,7 +121,6 @@ if(formChangeMulti){
                 const id = input.value
                 if(typeChange == "change-position"){
                     const position = input.closest("tr").querySelector("input[name='position']").value
-                    console.log(position);
                     ids.push(`${id}-${position}`)
                 }else{
                     ids.push(id)
@@ -178,7 +175,7 @@ if(formChangeMulti){
 
 // Sort
 const sort = document.querySelector("[sort]")
-console.log(sort);
+
 
 if(sort){
     let url = new URL(window.location.href)
@@ -188,7 +185,6 @@ if(sort){
     sortSelect.addEventListener("change",(e)=>{
         const value = e.target.value
         const [sortKey, sortValue] = value.split("-")
-        console.log(value);
         
 
         url.searchParams.set("sortKey", sortKey)

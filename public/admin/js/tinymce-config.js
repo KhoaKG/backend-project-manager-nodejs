@@ -1,6 +1,7 @@
 tinymce.init({
     selector: 'textarea',
     plugins: "image",
+    license_key: 'gpl',
     file_picker_types: 'image',
     file_picker_callback: (cb, value, meta) => {
       const input = document.createElement('input');

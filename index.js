@@ -4,6 +4,9 @@ require("dotenv").config()
 const database = require("./config/database")
 database.connect()
 
+const moment = require("moment")
+
+
 const systemConfig = require('./config/system')
 
 const routeAdmin = require("./routes/admin/index.route")
@@ -25,6 +28,8 @@ var path = require('path');
 
 const app = express()
 const port = process.env.PORT
+
+app.locals.moment = moment
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -49,6 +54,7 @@ route(app)
 
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

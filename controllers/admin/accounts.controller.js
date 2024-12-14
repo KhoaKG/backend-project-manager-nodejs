@@ -81,7 +81,7 @@ module.exports.editPatch = async (req, res) => {
     const emailExist = await Account.findOne({
         _id: {$ne: id},
         email: req.body.email,
-        deleted: falses
+        deleted: false
     })
     if(emailExist){
         req.flash("error",`Email ${req.body.email} đã tồn tại!`)
